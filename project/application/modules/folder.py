@@ -17,4 +17,3 @@ def check_and_create_directory(base_path, folder_name):
 
     if not os.path.exists(path):
         os.makedirs(path)
-

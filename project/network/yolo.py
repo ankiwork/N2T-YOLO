@@ -1,5 +1,5 @@
 from ultralytics import YOLO
-from project.configuration.yolo.version.processing import load_yolo_version
+from project.configuration.yolo.version.processing_version import load_yolo_version
 
 
 def start_training():
@@ -18,10 +18,9 @@ def train_yolo_model():
     model_name = load_yolo_version()
     model = YOLO(model_name)
 
-    data_yaml_path = "datasets/data.yaml"
+    # device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    # Установка устройства: 'cuda' для GPU или 'cpu' для CPU
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    data_yaml_path = "datasets/data.yaml"
 
     # Начало обучения на пользовательском наборе данных
     results = model.train(
@@ -30,7 +29,7 @@ def train_yolo_model():
         epochs=10,
         name="test",
         data=data_yaml_path,
-        device=device
+        device='cpu'
     )
 
     return results

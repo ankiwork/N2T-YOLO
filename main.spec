@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['main.py'],
+    ['C:\\Users\\ankiw\\Desktop\\Neural Network Training\\main.py'],
     pathex=[],
     binaries=[],
     datas=[],
