@@ -17,10 +17,10 @@ def train_yolo_model():
     # Определение вычислительных модулей
     device = load_data("project/configuration/yolo/data/selected_yolo_device.txt")
 
-    # Определение вычислительных модулей
+    # Определение количества эпох
     epochs = load_data("project/configuration/yolo/data/selected_yolo_epochs.txt")
 
-    # Определение вычислительных модулей
+    # Определение размера изображения
     image = load_data("project/configuration/yolo/data/selected_yolo_image.txt")
 
     # Загрузка предобученной модели

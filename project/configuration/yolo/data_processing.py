@@ -2,6 +2,7 @@ import os
 from project.modules.zip import check_and_create_file
 
 
+# TODO: переделать под работу с json файлом. Поиск осуществлять по ключу.
 def save_data(data, file_path):
     """
     Сохраняет данные в файл.
@@ -21,6 +22,7 @@ def save_data(data, file_path):
         file.write(data)
 
 
+# TODO: переделать под работу с json файлом. Поиск осуществлять по ключу.
 def load_data(file_path):
     """
     Загружает данные из файла.
@@ -39,6 +41,7 @@ def load_data(file_path):
         return ""
 
 
+# TODO: переделать под работу с json файлом. Поиск осуществлять по ключу.
 def handle_data_selection(selected_data, file_path):
     """
     Обрабатывает выбор данных и сохраняет их в файл.

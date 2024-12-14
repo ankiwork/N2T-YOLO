@@ -7,35 +7,47 @@ from project.configuration.yolo.data_processing import handle_data_selection, lo
 
 def create_workspace_layer():
     workspace_tab = Tab(text="Workspace")
-    workspace_container = Column()
 
-    # Тип процессора
+    workspace_container = Column(
+        alignment=MainAxisAlignment.CENTER,
+        horizontal_alignment=CrossAxisAlignment.CENTER,
+        spacing=50
+    )
+
+    info_text = (
+        ""
+    )
+
+    text_container = Container(
+        width=1800,
+        height=600,
+        padding=20,
+        border_radius=10,
+        alignment=alignment.center,
+        border=border.all(1, color="white"),
+        content=Text(info_text, size=16, color="white"),
+    )
+    workspace_container.controls.append(text_container)
+
     yolo_device_file_path = "project/configuration/yolo/data/selected_yolo_device.txt"
     default_yolo_device = load_data(yolo_device_file_path)
     yolo_device = ["cpu", "gpu"]
 
-    # Количество эпох
     yolo_epochs_file_path = "project/configuration/yolo/data/selected_yolo_epochs.txt"
     default_yolo_epochs = load_data(yolo_epochs_file_path)
     yolo_epochs = ["100", "200", "300"]
 
-    # Размер изображения
     yolo_image_file_path = "project/configuration/yolo/data/selected_yolo_image.txt"
     default_yolo_image = load_data(yolo_image_file_path)
     yolo_image = ["320", "640", "1280"]
 
-    # Версия YOLO
     yolo_version_file_path = "project/configuration/yolo/data/selected_yolo_version.txt"
     default_yolo_version = load_data(yolo_version_file_path)
     yolo_versions = ["yolo11m", "yolo11l", "yolo11x"]
 
-    vertical_space = Container(height=800)
-    workspace_container.controls.append(vertical_space)
-
     selection_row = Row(
         alignment=MainAxisAlignment.CENTER,
         controls=[
-            # Тип процессора
             Dropdown(
                 label="Тип процессора",
                 options=[dropdown.Option(version) for version in yolo_device],
@@ -43,10 +55,7 @@ def create_workspace_layer():
                 on_change=lambda e: handle_data_selection(e.control.value, yolo_device_file_path),
                 width=300,
             ),
-
             Container(width=10),
-
-            # Количество эпох
             Dropdown(
                 label="Количество эпох",
                 options=[dropdown.Option(version) for version in yolo_epochs],
@@ -54,10 +63,7 @@ def create_workspace_layer():
                 on_change=lambda e: handle_data_selection(e.control.value, yolo_epochs_file_path),
                 width=300,
             ),
-
             Container(width=10),
-
-            # Размер изображения
             Dropdown(
                 label="Размер изображения",
                 options=[dropdown.Option(version) for version in yolo_image],
@@ -65,10 +71,7 @@ def create_workspace_layer():
                 on_change=lambda e: handle_data_selection(e.control.value, yolo_image_file_path),
                 width=300,
             ),
-
             Container(width=10),
-
-            # Версия YOLO
             Dropdown(
                 label="Версия YOLO",
                 options=[dropdown.Option(version) for version in yolo_versions],
@@ -80,9 +83,6 @@ def create_workspace_layer():
     )
     workspace_container.controls.append(selection_row)
 
-    fixed_space = Container(height=20)
-    workspace_container.controls.append(fixed_space)
-
     button_row = Row(
         alignment=MainAxisAlignment.CENTER,
         spacing=5,
@@ -92,9 +92,7 @@ def create_workspace_layer():
                 on_click=lambda e: select_archive(workspace_tab, workspace_container),
                 width=150
             ),
-
             Container(width=10),
-
             ElevatedButton(
                 "Обучить модель",
                 on_click=lambda e: start_training(),
