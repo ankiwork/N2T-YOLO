@@ -1,11 +1,9 @@
 from ultralytics import YOLO
 from project.configuration.yolo.data_processing import load_data
 
-
 def start_training():
     results = train_yolo_model()
     print("Обучение завершено. Результаты:", results)
-
 
 def train_yolo_model():
     """
@@ -32,12 +30,16 @@ def train_yolo_model():
 
     # Начало обучения на пользовательском наборе данных с сохранением промежуточных результатов
     results = model.train(
-        batch=8,
-        name="test",
-        device=device,
-        imgsz=int(image),
-        epochs=int(epochs),
-        data=data_yaml_path
+        batch=1,              # Количество изображений, обрабатываемых за один раз
+        workers=4,            # Количество потоков-работников для загрузки данных
+        patience=5,           # Эпохи ожидания без заметного улучшения
+        lr0=0.0001,           # Определяет, насколько быстро модель будет обновлять свои веса
+        name="test",          # Имя для текущего запуска обучения
+        device=device,        # Устройство для выполнения обучения
+        optimizer='SGD',      # Оптимизатор, который следует использовать для обучения
+        imgsz=int(image),     # Размер входного изображения
+        epochs=int(epochs),   # Количество эпох обучения
+        data=data_yaml_path,  # Путь к файлу конфигурации набора данных
     )
 
     return results

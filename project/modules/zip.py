@@ -3,7 +3,7 @@ import shutil
 import zipfile
 from flet import *
 
-from project.modules.folders import check_and_create_directory
+from project.modules.directory import check_and_create_directory
 
 
 def check_and_create_file(directory, file_name):
