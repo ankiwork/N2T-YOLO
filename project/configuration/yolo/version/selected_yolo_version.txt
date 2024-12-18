@@ -1,1 +1,1 @@
-yolo11m
+yolo11m-seg

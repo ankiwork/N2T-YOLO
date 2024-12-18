@@ -1,3 +1,4 @@
+import torch
 from ultralytics import YOLO
 from project.configuration.yolo.version.processing import load_yolo_version
 
@@ -21,11 +22,11 @@ def train_yolo_model():
     data_yaml_path = "datasets/data.yaml"
 
     # Установка устройства: 'cuda' для GPU или 'cpu' для CPU
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'  # cuda
 
     # Начало обучения на пользовательском наборе данных
     results = model.train(
-        batch=16,
+        batch=8,
         imgsz=640,
         epochs=10,
         name="test",

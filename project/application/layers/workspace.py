@@ -17,7 +17,7 @@ def create_workspace_layer():
     workspace_container.controls.append(select_archive_button)
 
     # Выпадающий список со всеми версиями YOLO
-    yolo_versions = ["yolo11m", "yolo11l", "yolo11x"]
+    yolo_versions = ["yolo11m", "yolo11m-seg", "yolo11l", "yolo11l-seg", "yolo11x", "yolo11x-seg"]
     yolo_dropdown = Dropdown(
         label="Выберите версию YOLO",
         options=[dropdown.Option(version) for version in yolo_versions],

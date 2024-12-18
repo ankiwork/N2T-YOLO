@@ -18,7 +18,7 @@ def building_the_application(application_page: Page):
     application_page.window_height = 1080
 
     # Переключение в полноэкранный режим
-    application_page.window_full_screen = True
+    application_page.window.full_screen = False
 
     # Создание вкладок приложения с заданными параметрами
     application_layers = Tabs(
