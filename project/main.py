@@ -1,4 +1,4 @@
-from flet import *
+from flet import app
 
 from project.application.build import building_the_application
 
