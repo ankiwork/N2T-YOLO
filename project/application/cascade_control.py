@@ -22,8 +22,7 @@ def check_file_settings():
                 "selected_yolo_device": "gpu",
                 "selected_yolo_epochs": 100,
                 "selected_yolo_resolution": 320,
-                "selected_yolo_version": "yolo11m.pt"
-            }, f, indent=4)
+                "selected_yolo_version": "yolo11m.pt"}, f, indent=4)
 
     with open(settings_file, "r") as f:
         settings = json.load(f)
