@@ -4,6 +4,15 @@ import json
 settings_file = "project/configuration/yolo/data/launch_settings.json"
 
 def check_file_settings():
+    """
+    Проверяет наличие настроечного файла и записывает параметры по умолчанию.
+
+    Параметры:
+    None
+
+    Возвращает:
+    launch_denial (int): Флаг того, что запуск произведен впервые
+    """
     if not os.path.exists(settings_file):
         with open(settings_file, "w") as f:
             json.dump({"launch_denial": 0,
@@ -18,6 +27,15 @@ def check_file_settings():
     return settings.get("launch_denial")
 
 def update_launch_settings():
+    """
+    Обновляет флаг запуска.
+
+    Параметры:
+    None
+
+    Возвращает:
+    None
+    """
     with open(settings_file, "r") as f:
         settings = json.load(f)
         if settings["launch_denial"] == 1:
@@ -29,4 +47,13 @@ def update_launch_settings():
 
 
 def cleanup():
+    """
+    Проверка корректности параметров при штатном выключении программы.
+
+    Параметры:
+    None
+
+    Возвращает:
+    None
+    """
     update_launch_settings()
