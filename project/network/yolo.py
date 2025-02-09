@@ -1,9 +1,10 @@
 from ultralytics import YOLO
 from project.configuration.yolo.data_processing import load_data
-
+from project.application.cascade_control import update_launch_settings
 
 def start_training():
     results = train_yolo_model()
+    update_launch_settings()
     print("Обучение завершено. Результаты:", results)
 
 
@@ -43,5 +44,7 @@ def train_yolo_model():
         epochs=int(epochs),   # Количество эпох обучения
         data=data_yaml_path,  # Путь к файлу конфигурации набора данных
     )
+
+
 
     return results
