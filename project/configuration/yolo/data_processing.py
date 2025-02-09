@@ -13,7 +13,7 @@ def save_data(data, label):
     Возвращает:
     None
     """
-    with open(settings_file, "w") as f:
+    with open(settings_file, "r") as f:
         settings = json.load(f)
         if label == "Тип графического устройства":
             settings["selected_yolo_device"] = data
@@ -26,6 +26,7 @@ def save_data(data, label):
         else:
             print("Ошибка типа")
             return
+    with open(settings_file, "w") as f:
         json.dump(settings, f, indent=4)
 
 
@@ -42,11 +43,11 @@ def load_data(label):
     with open(settings_file, "r") as f:
         settings = json.load(f)
         if label == "Тип графического устройства":
-            setting = settings.get("Тип графического устройства")
+            setting = settings.get("selected_yolo_device")
         elif label == "Количество эпох":
-            setting = settings.get("Количество эпох")
+            setting = settings.get("selected_yolo_epochs")
         elif label == "Размер изображения":
-            setting = settings.get("Размер изображения")
+            setting = settings.get("selected_yolo_resolution")
         elif label == "Версия YOLO":
-            setting = settings.get("Версия YOLO")
+            setting = settings.get("selected_yolo_version")
         return setting

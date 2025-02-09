@@ -6,6 +6,12 @@ from project.configuration.yolo.data_processing import save_data, load_data
 
 
 def create_workspace_layer():
+    """
+    Создает вкладку "workspace".
+
+    Возвращает:
+    workspace_tab: Сформированная вкладка.
+    """
     workspace_tab = Tab(text="Workspace")
 
     workspace_container = Column(
@@ -56,7 +62,7 @@ def create_workspace_layer():
                 label="Количество эпох",
                 options=[dropdown.Option(version) for version in yolo_epochs],
                 value=default_yolo_epochs,
-                on_change=lambda e: save_data(e.control.value, e.control.label),
+                on_change=lambda e: save_data(int(e.control.value), e.control.label),
                 width=300,
             ),
             Container(width=10),
@@ -64,7 +70,7 @@ def create_workspace_layer():
                 label="Размер изображения",
                 options=[dropdown.Option(version) for version in yolo_image],
                 value=default_yolo_image,
-                on_change=lambda e: save_data(e.control.value, e.control.label),
+                on_change=lambda e: save_data(int(e.control.value), e.control.label),
                 width=300,
             ),
             Container(width=10),
