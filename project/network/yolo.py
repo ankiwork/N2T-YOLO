@@ -16,16 +16,16 @@ def train_yolo_model():
     - results: Результаты обучения.
     """
     # Определение вычислительных модулей
-    device = 0 if (load_data("project/configuration/yolo/data/selected_yolo_device.txt")) == 0 else 'cpu'
+    device = 0 if (load_data("Тип графического устройства")) == 0 else 'cpu'
 
     # Определение количества эпох
-    epochs = load_data("project/configuration/yolo/data/selected_yolo_epochs.txt")
+    epochs = load_data("Количество эпох")
 
     # Определение размера изображения
-    image = load_data("project/configuration/yolo/data/selected_yolo_image.txt")
+    image = load_data("Размер изображения")
 
     # Загрузка предобученной модели
-    model = load_data("project/configuration/yolo/data/selected_yolo_version.txt")
+    model = load_data("Версия YOLO")
     model = YOLO(model)
 
     # Определение расположения файла data.yaml
