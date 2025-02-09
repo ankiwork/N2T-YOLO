@@ -1,25 +1,29 @@
 import os
 import json
 
-settings_file = "project/configuration/yolo/launch_settings.json"
+settings_file = "project/configuration/yolo/data/launch_settings.json"
+data_folder = os.path.dirname(settings_file)
+
 
 def check_file_settings():
     """
-    Проверяет наличие настроечного файла и записывает параметры по умолчанию.
-
-    Параметры:
-    None
+    Проверяет наличие папки data и настроечного файла, записывает параметры по умолчанию.
 
     Возвращает:
     launch_denial (int): Флаг того, что запуск произведен впервые
     """
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+
     if not os.path.exists(settings_file):
         with open(settings_file, "w") as f:
-            json.dump({"launch_denial": 0,
-                       "selected_yolo_device": "gpu",
-                       "selected_yolo_epochs": 100,
-                       "selected_yolo_resolution": 320,
-                       "selected_yolo_version": "yolo11m.pt"}, f, indent=4)
+            json.dump({
+                "launch_denial": 0,
+                "selected_yolo_device": "gpu",
+                "selected_yolo_epochs": 100,
+                "selected_yolo_resolution": 320,
+                "selected_yolo_version": "yolo11m.pt"
+            }, f, indent=4)
 
     with open(settings_file, "r") as f:
         settings = json.load(f)
