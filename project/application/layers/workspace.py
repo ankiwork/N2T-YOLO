@@ -2,7 +2,7 @@ from flet import *
 
 from project.modules.zip import select_archive
 from project.network.yolo import start_training
-from project.configuration.yolo.data_processing import handle_data_selection, load_data
+from project.configuration.yolo.data_processing import save_data, load_data
 
 
 def create_workspace_layer():
@@ -52,7 +52,7 @@ def create_workspace_layer():
                 label="Тип процессора",
                 options=[dropdown.Option(version) for version in yolo_device],
                 value=default_yolo_device,
-                on_change=lambda e: handle_data_selection(e.control.value, yolo_device_file_path),
+                on_change=lambda e: save_data(e.control.value, e.control.label),
                 width=300,
             ),
             Container(width=10),
@@ -60,7 +60,7 @@ def create_workspace_layer():
                 label="Количество эпох",
                 options=[dropdown.Option(version) for version in yolo_epochs],
                 value=default_yolo_epochs,
-                on_change=lambda e: handle_data_selection(e.control.value, yolo_epochs_file_path),
+                on_change=lambda e: save_data(e.control.value, e.control.label),
                 width=300,
             ),
             Container(width=10),
@@ -68,7 +68,7 @@ def create_workspace_layer():
                 label="Размер изображения",
                 options=[dropdown.Option(version) for version in yolo_image],
                 value=default_yolo_image,
-                on_change=lambda e: handle_data_selection(e.control.value, yolo_image_file_path),
+                on_change=lambda e: save_data(e.control.value, e.control.label),
                 width=300,
             ),
             Container(width=10),
@@ -76,7 +76,7 @@ def create_workspace_layer():
                 label="Версия YOLO",
                 options=[dropdown.Option(version) for version in yolo_versions],
                 value=default_yolo_version,
-                on_change=lambda e: handle_data_selection(e.control.value, yolo_version_file_path),
+                on_change=lambda e: save_data(e.control.value, e.control.label),
                 width=300,
             ),
         ]

@@ -4,7 +4,7 @@ import json
 
 settings_file = "project/configuration/yolo/data/launch_settings.json"
 
-def check_settings():
+def check_file_settings():
     if not os.path.exists(settings_file):
         with open(settings_file, "w") as f:
             json.dump({"launch_denial": 0,
@@ -18,6 +18,11 @@ def check_settings():
 
     return settings.get("launch_denial")
 
+
+def save_settings(label):
+    pass
+
+
 def update_launch_settings():
     with open(settings_file, "r") as f:
         settings = json.load(f)
@@ -27,6 +32,7 @@ def update_launch_settings():
             settings["launch_denial"] = 1
         with open(settings_file, "w") as f:
             json.dump(settings, f, indent=4)
+
 
 def cleanup():
     update_launch_settings()

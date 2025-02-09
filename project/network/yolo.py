@@ -45,6 +45,4 @@ def train_yolo_model():
         data=data_yaml_path,  # Путь к файлу конфигурации набора данных
     )
 
-
-
     return results
