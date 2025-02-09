@@ -1,7 +1,0 @@
-{
-    "launch_denial": 0,
-    "selected_yolo_device": "gpu",
-    "selected_yolo_epochs": 300,
-    "selected_yolo_resolution": 1280,
-    "selected_yolo_version": "yolo11m.pt"
-}
