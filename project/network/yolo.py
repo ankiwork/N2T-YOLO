@@ -3,6 +3,12 @@ from project.configuration.yolo.data_processing import load_data
 from project.application.cascade_control import update_launch_settings
 
 def start_training():
+    """
+    Инициирует обучение и контроль за флагом запуска.
+
+    Возвращает:
+    None
+    """
     results = train_yolo_model()
     update_launch_settings()
     print("Обучение завершено. Результаты:", results)
