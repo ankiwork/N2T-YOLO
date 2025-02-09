@@ -1,1 +1,1 @@
-yolo11x-seg.pt
+yolo11m.pt

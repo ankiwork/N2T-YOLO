@@ -1,56 +1,52 @@
-import os
-from project.modules.zip import check_and_create_file
+import json
 
+settings_file = "project/configuration/yolo/data/launch_settings.json"
 
-# TODO: переделать под работу с json файлом. Поиск осуществлять по ключу.
-def save_data(data, file_path):
+def save_data(data, label):
     """
     Сохраняет данные в файл.
 
     Параметры:
-    Data (str): Данные для сохранения в файл.
-    File_path (str): Путь к файлу, в который будут сохранены данные.
+    data (str): Данные для сохранения в файл;
+    label (str): Указатель для записи данных.
 
     Возвращает:
     None
     """
-    # Проверяем и создаем файл, если он не существует
-    check_and_create_file(os.path.dirname(file_path), os.path.basename(file_path))
+    with open(settings_file, "w") as f:
+        settings = json.load(f)
+        if label == "Тип графического устройства":
+            settings["selected_yolo_device"] = data
+        elif label == "Количество эпох":
+            settings["selected_yolo_epochs"] = data
+        elif label == "Размер изображения":
+            settings["selected_yolo_resolution"] = data
+        elif label == "Версия YOLO":
+            settings["selected_yolo_version"] = data
+        else:
+            print("Ошибка типа")
+            return
+        json.dump(settings, f, indent=4)
 
-    # Записываем данные в файл
-    with open(file_path, "w") as file:
-        file.write(data)
 
-
-# TODO: переделать под работу с json файлом. Поиск осуществлять по ключу.
-def load_data(file_path):
+def load_data(label):
     """
     Загружает данные из файла.
 
     Параметры:
-    File_path (str): Путь к файлу для загрузки данных.
+    label (str): Указатель для получения данных.
 
     Возвращает:
-    Str: Содержимое файла или пустую строку, если файл не существует или пуст.
+    setting (int, str): параметр для настройки
     """
-    try:
-        with open(file_path, "r") as file:
-            return file.read().strip()
-
-    except FileNotFoundError:
-        return ""
-
-
-# TODO: переделать под работу с json файлом. Поиск осуществлять по ключу.
-def handle_data_selection(selected_data, file_path):
-    """
-    Обрабатывает выбор данных и сохраняет их в файл.
-
-    Параметры:
-    Selected_data (str): Выбранные данные для сохранения.
-    File_path (str): Путь к файлу для сохранения данных.
-
-    Возвращает:
-    None
-    """
-    save_data(selected_data, file_path)
+    with open(settings_file, "r") as f:
+        settings = json.load(f)
+        if label == "Тип графического устройства":
+            setting = settings.get("Тип графического устройства")
+        elif label == "Количество эпох":
+            setting = settings.get("Количество эпох")
+        elif label == "Размер изображения":
+            setting = settings.get("Размер изображения")
+        elif label == "Версия YOLO":
+            setting = settings.get("Версия YOLO")
+        return setting
