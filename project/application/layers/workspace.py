@@ -49,7 +49,7 @@ def create_workspace_layer():
         alignment=MainAxisAlignment.CENTER,
         controls=[
             Dropdown(
-                label="Тип процессора",
+                label="Тип графического устройства",
                 options=[dropdown.Option(version) for version in yolo_device],
                 value=default_yolo_device,
                 on_change=lambda e: save_data(e.control.value, e.control.label),

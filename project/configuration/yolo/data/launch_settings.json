@@ -1,5 +1,5 @@
 {
-    "launch_denial": 1,
+    "launch_denial": 0,
     "selected_yolo_device": "gpu",
     "selected_yolo_epochs": 100,
     "selected_yolo_resolution": 320,
