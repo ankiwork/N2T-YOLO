@@ -1,6 +1,6 @@
 import json
 
-settings_file = "project/configuration/yolo/data/launch_settings.json"
+settings_file = "project/configuration/yolo/launch_settings.json"
 
 def save_data(data, label):
     """
