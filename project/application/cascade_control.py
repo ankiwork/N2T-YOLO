@@ -7,7 +7,11 @@ settings_file = "project/configuration/yolo/data/launch_settings.json"
 def check_settings():
     if not os.path.exists(settings_file):
         with open(settings_file, "w") as f:
-            json.dump({"launch_denial": 0}, f, indent=4)
+            json.dump({"launch_denial": 0,
+                       "selected_yolo_device": "gpu",
+                       "selected_yolo_epochs": 100,
+                       "selected_yolo_resolution": 320,
+                       "selected_yolo_version": "yolo11m.pt"}, f, indent=4)
 
     with open(settings_file, "r") as f:
         settings = json.load(f)
