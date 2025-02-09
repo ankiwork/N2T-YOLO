@@ -29,20 +29,16 @@ def create_workspace_layer():
     )
     workspace_container.controls.append(text_container)
 
-    yolo_device_file_path = "project/configuration/yolo/data/selected_yolo_device.txt"
-    default_yolo_device = load_data(yolo_device_file_path)
+    default_yolo_device = load_data("Тип графического устройства")
     yolo_device = ["cpu", "gpu"]
 
-    yolo_epochs_file_path = "project/configuration/yolo/data/selected_yolo_epochs.txt"
-    default_yolo_epochs = load_data(yolo_epochs_file_path)
+    default_yolo_epochs = load_data("Количество эпох")
     yolo_epochs = ["100", "200", "300"]
 
-    yolo_image_file_path = "project/configuration/yolo/data/selected_yolo_image.txt"
-    default_yolo_image = load_data(yolo_image_file_path)
+    default_yolo_image = load_data("Размер изображения")
     yolo_image = ["320", "640", "1280"]
 
-    yolo_version_file_path = "project/configuration/yolo/data/selected_yolo_version.txt"
-    default_yolo_version = load_data(yolo_version_file_path)
+    default_yolo_version = load_data("Версия YOLO")
     yolo_versions = ["yolo11m.pt", "yolo11m-seg.pt", "yolo11l.pt", "yolo11l-seg.pt", "yolo11x.pt", "yolo11x-seg.pt"]
 
     selection_row = Row(
