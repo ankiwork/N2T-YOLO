@@ -6,6 +6,6 @@ from project.application.cascade_control import check_file_settings, update_laun
 
 atexit.register(cleanup)
 
-if check_file_settings()== 0:
+if check_file_settings() == 0:
     update_launch_settings()
     app(target=building_the_application)
