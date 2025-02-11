@@ -26,7 +26,8 @@ def create_settings_layer():
         ("Контрольные точки обучения", yolo_bool, load_data("Контрольные точки обучения")),
         ("Кэширование изображений", yolo_bool, load_data("Кэширование изображений")),
         ("Перезапись существующего названия", yolo_bool, load_data("Перезапись существующего названия")),
-        ("Начинать ли обучение с предварительно обученной модели", yolo_bool, load_data("Начинать ли обучение с предварительно обученной модели")),
+        ("Начинать ли обучение с предварительно обученной модели", yolo_bool,
+         load_data("Начинать ли обучение с предварительно обученной модели")),
         ("Детерминированные алгоритмы", yolo_bool, load_data("Детерминированные алгоритмы")),
         ("Мега класс", yolo_bool, load_data("Мега класс")),
         ("Прямоугольное обучение", yolo_bool, load_data("Прямоугольное обучение"))
@@ -45,9 +46,9 @@ def create_settings_layer():
                              alignment=MainAxisAlignment.CENTER
                              )
     textfield_column = Column(spacing=10,
-                             controls=[],
-                             alignment=MainAxisAlignment.CENTER
-                             )
+                              controls=[],
+                              alignment=MainAxisAlignment.CENTER
+                              )
 
     for label, options, default in dropdowns:
         default = default if default in options else "параметр не найден"
@@ -64,7 +65,8 @@ def create_settings_layer():
         text_field = TextField(
             label=label,
             value=str(default) if default else "",
-            on_change=lambda e: save_data(e.control.value, e.control.label) if re.match(pattern, e.control.value) else None,
+            on_change=lambda e: save_data(e.control.value, e.control.label) if re.match(pattern,
+                                                                                        e.control.value) else None,
             width=250,
         )
         textfield_column.controls.append(text_field)
