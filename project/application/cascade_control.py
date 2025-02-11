@@ -22,12 +22,25 @@ def check_file_settings():
                 "selected_yolo_device": "gpu",
                 "selected_yolo_epochs": 100,
                 "selected_yolo_resolution": 320,
-                "selected_yolo_version": "yolo11m.pt"}, f, indent=4)
+                "selected_yolo_version": "yolo11m.pt",
+                "selected_save_mode": "True",
+                "selected_save_period": -1,
+                "cache_on": "False",
+                "name_of_project": "None",
+                "name_of_records_directory": "None",
+                "rewrite_ok": "False",
+                "selected_pretrained_mode": "True",
+                "selected_seed": 0,
+                "deterministic_enabled": "True",
+                "mega_clss": "False",
+                "classes_list": "None",
+                "rect_on": "False"}, f, indent=4)
 
     with open(settings_file, "r") as f:
         settings = json.load(f)
 
     return settings.get("launch_denial")
+
 
 def update_launch_settings():
     """

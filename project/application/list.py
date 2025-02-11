@@ -1,5 +1,7 @@
 from project.application.layers.license import create_license_layer
 from project.application.layers.workspace import create_workspace_layer
+from project.application.layers.settings import create_settings_layer
+
 
 def create_layers_list():
     """
@@ -14,6 +16,7 @@ def create_layers_list():
     # Формирование списка слоёв
     layers_list = [
         create_workspace_layer(),
+        create_settings_layer(),
         create_license_layer()
     ]
 

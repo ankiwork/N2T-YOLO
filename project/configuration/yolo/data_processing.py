@@ -1,6 +1,9 @@
+import os
 import json
 
 settings_file = "project/configuration/yolo/data/launch_settings.json"
+data_folder = os.path.dirname(settings_file)
+
 
 def save_data(data, label):
     """
@@ -40,6 +43,31 @@ def load_data(label):
     Возвращает:
     setting (int, str): параметр для настройки
     """
+
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+
+    if not os.path.exists(settings_file):
+        with open(settings_file, "w") as f:
+            json.dump({
+                "launch_denial": 0,
+                "selected_yolo_device": "gpu",
+                "selected_yolo_epochs": 100,
+                "selected_yolo_resolution": 320,
+                "selected_yolo_version": "yolo11m.pt",
+                "selected_save_mode": "True",
+                "selected_save_period": -1,
+                "cache_on": "False",
+                "name_of_project": "None",
+                "name_of_records_directory": "None",
+                "rewrite_ok": "False",
+                "selected_pretrained_mode": "True",
+                "selected_seed": 0,
+                "deterministic_enabled": "True",
+                "mega_clss": "False",
+                "classes_list": "None",
+                "rect_on": "False"}, f, indent=4)
+
     with open(settings_file, "r") as f:
         settings = json.load(f)
         if label == "Тип графического устройства":
