@@ -26,6 +26,30 @@ def save_data(data, label):
             settings["selected_yolo_resolution"] = data
         elif label == "Версия YOLO":
             settings["selected_yolo_version"] = data
+        elif label == "Контрольные точки обучения":
+            settings["selected_save_mode"] = data
+        elif label == "Частота сохранения контрольных точек":
+            settings["selected_save_period"] = data
+        elif label == "Кэширование изображений":
+            settings["cache_on"] = data
+        elif label == "Имя директории проекта":
+            settings["name_of_project"] = data
+        elif label == "Имя тренировочного прогона":
+            settings["name_of_records_directory"] = data
+        elif label == "Перезапись существующего названия":
+            settings["rewrite_ok"] = data
+        elif label == "Начинать ли обучение с предварительно обученной модели":
+            settings["selected_pretrained_mode"] = data
+        elif label == "Случайное зерно для обучения":
+            settings["selected_seed"] = data
+        elif label == "Детерминированные алгоритмы":
+            settings["deterministic_enabled"] = data
+        elif label == "Мега класс":
+            settings["mega_clss"] = data
+        elif label == "Список классов":
+            settings["classes_list"] = data
+        elif label == "Прямоугольное обучение":
+            settings["rect_on"] = data
         else:
             print("Ошибка типа")
             return
@@ -78,4 +102,28 @@ def load_data(label):
             setting = settings.get("selected_yolo_resolution")
         elif label == "Версия YOLO":
             setting = settings.get("selected_yolo_version")
+        elif label == "Контрольные точки обучения":
+            setting = settings.get("selected_save_mode")
+        elif label == "Частота сохранения контрольных точек":
+            setting = settings.get("selected_save_period")
+        elif label == "Кэширование изображений":
+            setting = settings.get("cache_on")
+        elif label == "Имя директории проекта":
+            setting = settings.get("name_of_project")
+        elif label == "Имя тренировочного прогона":
+            setting = settings.get("name_of_records_directory")
+        elif label == "Перезапись существующего названия":
+            setting = settings.get("rewrite_ok")
+        elif label == "Начинать ли обучение с предварительно обученной модели":
+            setting = settings.get("selected_pretrained_mode")
+        elif label == "Случайное зерно для обучения":
+            setting = settings.get("selected_seed")
+        elif label == "Детерминированные алгоритмы":
+            setting = settings.get("deterministic_enabled")
+        elif label == "Мега класс":
+            setting = settings.get("mega_clss")
+        elif label == "Список классов":
+            setting = settings.get("classes_list")
+        elif label == "Прямоугольное обучение":
+            setting = settings.get("rect_on")
         return setting
