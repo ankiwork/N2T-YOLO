@@ -1,3 +1,4 @@
+import re
 from flet import *
 
 from project.configuration.yolo.data_processing import save_data, load_data
@@ -6,9 +7,8 @@ from project.configuration.yolo.data_processing import save_data, load_data
 def create_settings_layer():
     settings_tab = Tab(text="Settings")
 
-    settings_container = Column(
+    settings_container = Row(
         alignment=MainAxisAlignment.CENTER,
-        horizontal_alignment=CrossAxisAlignment.CENTER,
         spacing=50
     )
 
@@ -24,27 +24,33 @@ def create_settings_layer():
         ("Размер изображения", yolo_image, load_data("Размер изображения")),
         ("Версия YOLO", yolo_versions, load_data("Версия YOLO")),
         ("Контрольные точки обучения", yolo_bool, load_data("Контрольные точки обучения")),
-        ("Частота сохранения контрольных точек", list(map(str, range(1, 11))),
-         load_data("Частота сохранения контрольных точек")),
         ("Кэширование изображений", yolo_bool, load_data("Кэширование изображений")),
-        ("Имя директории проекта", ["Проект1", "Проект2"], load_data("Имя директории проекта")),
-        ("Имя тренировочного прогона", ["Запуск1", "Запуск2"], load_data("Имя тренировочного прогона")),
         ("Перезапись существующего названия", yolo_bool, load_data("Перезапись существующего названия")),
-        ("Начинать ли обучение с предварительно обученной модели", yolo_bool,
-         load_data("Начинать ли обучение с предварительно обученной модели")),
-        ("Случайное зерно для обучения", list(map(str, range(0, 1000, 100))),
-         load_data("Случайное зерно для обучения")),
+        ("Начинать ли обучение с предварительно обученной модели", yolo_bool, load_data("Начинать ли обучение с предварительно обученной модели")),
         ("Детерминированные алгоритмы", yolo_bool, load_data("Детерминированные алгоритмы")),
         ("Мега класс", yolo_bool, load_data("Мега класс")),
-        ("Список классов", ["Класс1", "Класс2"], load_data("Список классов")),
         ("Прямоугольное обучение", yolo_bool, load_data("Прямоугольное обучение"))
     ]
 
-    columns = [Column(spacing=10) for _ in range(4)]
+    input_fields = [
+        ("Частота сохранения контрольных точек", load_data("Частота сохранения контрольных точек"), r"^\d+$"),
+        ("Случайное зерно для обучения", load_data("Случайное зерно для обучения"), r"^\d+$"),
+        ("Имя директории проекта", load_data("Имя директории проекта"), r"^[a-zA-Z0-9_-]+$"),
+        ("Имя тренировочного прогона", load_data("Имя тренировочного прогона"), r"^[a-zA-Z0-9_-]+$"),
+        ("Список классов", load_data("Список классов"), r"^[a-zA-Z0-9, ]+$")
+    ]
 
-    for i, (label, options, default) in enumerate(dropdowns):
+    dropdown_column = Column(spacing=10,
+                             controls=[],
+                             alignment=MainAxisAlignment.CENTER
+                             )
+    textfield_column = Column(spacing=10,
+                             controls=[],
+                             alignment=MainAxisAlignment.CENTER
+                             )
+
+    for label, options, default in dropdowns:
         default = default if default in options else "параметр не найден"
-
         setting = Dropdown(
             label=label,
             options=[dropdown.Option(str(option)) for option in options],
@@ -52,9 +58,19 @@ def create_settings_layer():
             on_change=lambda e: save_data(e.control.value, e.control.label),
             width=250,
         )
-        columns[i % 4].controls.append(setting)
+        dropdown_column.controls.append(setting)
 
-    settings_container.controls.append(Row(spacing=20, controls=columns))
+    for label, default, pattern in input_fields:
+        text_field = TextField(
+            label=label,
+            value=str(default) if default else "",
+            on_change=lambda e: save_data(e.control.value, e.control.label) if re.match(pattern, e.control.value) else None,
+            width=250,
+        )
+        textfield_column.controls.append(text_field)
+
+    settings_container.controls.append(dropdown_column)
+    settings_container.controls.append(textfield_column)
     settings_tab.content = settings_container
 
     return settings_tab
