@@ -1,6 +1,10 @@
 from ultralytics import YOLO
+from ultralytics.utils import LOGGER
+
 from project.configuration.yolo.data_processing import load_data
 from project.application.cascade_control import update_launch_settings
+
+#TODO: from ultralytics.utils import LOGGER че ты такое trainer.py 358 строка там брать train.py 113 строка dataset.py 148 строка
 
 
 def start_training():
@@ -48,7 +52,7 @@ def train_yolo_model():
     # Загрузка предобученной модели
     model = load_data("Версия YOLO")
     model = YOLO(model)
-
+    LOGGER.info("aaaaaaa")
     # Начало обучения на пользовательском наборе данных с сохранением промежуточных результатов
     results = model.train(
         batch=int(batch),              # Количество изображений, обрабатываемых за один раз
