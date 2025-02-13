@@ -3,7 +3,8 @@ from ultralytics import YOLO
 from project.configuration.yolo.data_processing import load_data
 from project.application.backend.cascade_control import update_launch_settings
 
-#TODO: from ultralytics.utils import LOGGER че ты такое trainer.py 358 строка там брать train.py 113 строка dataset.py 148 строка
+# TODO: from ultralytics.utils import LOGGER че ты такое trainer.py 358 строка там брать train.py 113 строка
+#  dataset.py 148 строка
 
 
 def start_training():

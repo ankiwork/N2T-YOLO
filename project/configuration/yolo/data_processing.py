@@ -52,6 +52,26 @@ LABEL_TO_KEY = {
 }
 
 
+def is_number(value):
+    """
+    Проверяет, является ли строка числом (int или float)
+
+    Параметры:
+    value : неопределенная строка
+
+    Возвращает:
+    value
+    """
+
+    try:
+        return int(value)
+    except ValueError:
+        try:
+            return float(value)
+        except ValueError:
+            return value  # Оставляем как есть, если это не число
+
+
 def save_data(data, label):
     """
     Сохраняет данные в JSON-файл.
@@ -72,7 +92,7 @@ def save_data(data, label):
         with open(settings_file, "r", encoding="utf-8") as f:
             settings = json.load(f)
 
-        settings[key] = data
+        settings[key] = is_number(data)
 
         with open(settings_file, "w", encoding="utf-8") as f:
             json.dump(settings, f, indent=4, ensure_ascii=False)
