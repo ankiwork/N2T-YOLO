@@ -41,7 +41,7 @@ def create_settings_layer():
         ("Скорость обновления весов", load_data("Скорость обновления весов"), r"^-?\d+(?:\.\d+)?$"),
         ("Частота сохранения контрольных точек", load_data("Частота сохранения контрольных точек"),
          r"^-?\d+(?:\.\d+)?$"),
-        ("Случайное зерно для обучения", load_data("Случайное зерно для обучения"), r"^-?\d+(?:\.\d+)?$"),
+        ("Случайное зерно для обучения", load_data("Случайное зерно для обучения"), r"^-?\d+$"),
         ("Имя директории проекта", load_data("Имя директории проекта"), r"^[a-zA-Z0-9_-]+$"),
         ("Имя тренировочного прогона", load_data("Имя тренировочного прогона"), r"^[a-zA-Z0-9_-]+$"),
         ("Список классов", load_data("Список классов"), r"^[a-zA-Z0-9, ]+$")
@@ -68,9 +68,10 @@ def create_settings_layer():
         dropdown_column.controls.append(setting)
 
     for label, default, pattern in input_fields:
+
         text_field = TextField(
             label=label,
-            value=str(default) if default else "",
+            value=str(default) if default is not None else "",
             on_change=lambda e: save_data(e.control.value, e.control.label) if re.match(pattern,
                                                                                         e.control.value) else None,
             width=250,
