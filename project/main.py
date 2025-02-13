@@ -2,7 +2,7 @@ import atexit
 from flet import app
 
 from project.application.build import building_the_application
-from project.application.cascade_control import check_file_settings, update_launch_settings, cleanup
+from project.application.backend.cascade_control import check_file_settings, update_launch_settings, cleanup
 
 atexit.register(cleanup)
 

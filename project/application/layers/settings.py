@@ -2,6 +2,7 @@ import re
 from flet import *
 
 from project.configuration.yolo.data_processing import save_data, load_data
+from project.application.backend.cascade_control import reset_settings
 
 
 def create_settings_layer():
@@ -13,8 +14,8 @@ def create_settings_layer():
     )
 
     yolo_device = ["cpu", "gpu"]
-    yolo_epochs = ["100", "200", "300"]
-    yolo_image = ["320", "640", "1280"]
+    yolo_epochs = [100, 200, 300]
+    yolo_image = [320, 640, 1280]
     yolo_versions = ["yolo11m.pt", "yolo11m-seg.pt", "yolo11l.pt", "yolo11l-seg.pt", "yolo11x.pt", "yolo11x-seg.pt"]
     yolo_bool = ["True", "False"]
 
@@ -75,8 +76,22 @@ def create_settings_layer():
         )
         textfield_column.controls.append(text_field)
 
+    button_row = Row(
+        alignment=MainAxisAlignment.CENTER,
+        spacing=5,
+        controls=[
+            Container(width=10),
+            ElevatedButton(
+                "Сбросить настройки",
+                on_click=lambda e: reset_settings(textfield_column.controls, dropdown_column.controls, settings_tab),
+                width=150
+            )
+        ]
+    )
+
     settings_container.controls.append(dropdown_column)
     settings_container.controls.append(textfield_column)
+    settings_container.controls.append(button_row)
     settings_tab.content = settings_container
 
     return settings_tab
