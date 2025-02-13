@@ -1,5 +1,6 @@
 import os
 import json
+from project.configuration.yolo.data_processing import default_settings, LABEL_TO_KEY
 
 settings_file = "project/configuration/yolo/data/launch_settings.json"
 data_folder = os.path.dirname(settings_file)
@@ -18,6 +19,10 @@ def check_file_settings():
     if not os.path.exists(settings_file):
         with open(settings_file, "w") as f:
             json.dump({
+                "batch": 1,
+                "workers": 4,
+                "patience": 5,
+                "lr0": 0.0001,
                 "launch_denial": 0,
                 "selected_yolo_device": "gpu",
                 "selected_yolo_epochs": 100,
@@ -73,3 +78,13 @@ def cleanup():
     None
     """
     update_launch_settings()
+
+
+def reset_settings(textfield, dropdown, settings):
+    for text in textfield:
+        label = LABEL_TO_KEY.get(text.label)
+        text.value = type(text.value)(default_settings.get(label))
+    for drop in dropdown:
+        label = LABEL_TO_KEY.get(drop.label)
+        drop.value = type(drop.value)(default_settings.get(label))
+    settings.update()
