@@ -10,7 +10,7 @@ from project.application.backend.logger import LogRedirector
 
 def start_training(log_output):
     """
-    Инициирует обучение и контроль за флагом запуска.
+    Инициирует обучение.
 
     Возвращает:
     None
@@ -20,7 +20,7 @@ def start_training(log_output):
 
 def train_yolo_model(log_widget):
     """
-    Обучает модель YOLO на пользовательском наборе данных.
+    Обучает модель YOLO на пользовательском наборе данных и контроль за флагом запуска.
 
     Возвращает:
     - None
