@@ -81,6 +81,17 @@ def cleanup():
 
 
 def reset_settings(textfield, dropdown, settings):
+    """
+    Проверка корректности параметров при штатном выключении программы.
+
+    Параметры:
+    textfield (TextField): Поля настройки со вписыванием параметров
+    dropdown (Dropdown): Поля с выпадающем списком
+    settings (Tab): Вкладка настроек
+
+    Возвращает:
+    None
+    """
     for text in textfield:
         label = LABEL_TO_KEY.get(text.label)
         text.value = type(text.value)(default_settings.get(label))

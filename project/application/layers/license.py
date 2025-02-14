@@ -1,9 +1,19 @@
 from flet import *
 
-def create_license_layer():
-    workspace_tab = Tab(text="License")
 
-    workspace_container = Column(
+def create_license_layer():
+    """
+    Создает вкладку "license".
+
+    Параметры:
+    None
+
+    Возвращает:
+    license_tab: Сформированная вкладка.
+    """
+    license_tab = Tab(text="License")
+
+    license_container = Column(
         alignment=MainAxisAlignment.CENTER,
         horizontal_alignment=CrossAxisAlignment.CENTER,
         expand=True
@@ -11,7 +21,7 @@ def create_license_layer():
 
     license_text = (
         "MIT License\n\n"
-        "Copyright (c) 2024 Antonov Kirill Alekseevich\n\n"
+        "Copyright (c) 2024 Antonov Kirill Alekseevich and Co.\n\n"
         "Permission is hereby granted, free of charge, to any person obtaining a copy "
         "of this software and associated documentation files (the \"Software\"), to deal "
         "in the Software without restriction, including without limitation the rights "
@@ -28,18 +38,26 @@ def create_license_layer():
         "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE "
         "SOFTWARE."
     )
-
+    log_output = TextField(
+        width=900,
+        height=460,
+        text_size=16,
+        color="black",
+        multiline=True,
+        read_only=True,
+        value=license_text
+    )
     text_container = Container(
-        width=700,
-        height=500,
-        padding=20,
+        width=900,
+        height=460,
+        padding=10,
         border_radius=10,
         alignment=alignment.center,
         border=border.all(1, color="white"),
-        content=Text(license_text, size=16, color="white"),
+        content=log_output
     )
-    workspace_container.controls.append(text_container)
+    license_container.controls.append(text_container)
 
-    workspace_tab.content = workspace_container
+    license_tab.content = license_container
 
-    return workspace_tab
+    return license_tab

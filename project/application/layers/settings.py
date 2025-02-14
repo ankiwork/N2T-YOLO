@@ -6,6 +6,15 @@ from project.application.backend.cascade_control import reset_settings
 
 
 def create_settings_layer():
+    """
+    Создает вкладку "settings".
+
+    Параметры:
+    None
+
+    Возвращает:
+    settings_tab: Сформированная вкладка.
+    """
     settings_tab = Tab(text="Settings")
 
     settings_container = Row(
