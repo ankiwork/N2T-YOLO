@@ -7,9 +7,6 @@ from project.configuration.yolo.data_processing import load_data
 from project.application.backend.cascade_control import update_launch_settings
 from project.application.backend.logger import LogRedirector
 
-# TODO: from ultralytics.utils import LOGGER че ты такое trainer.py 358 строка там брать train.py 113 строка
-#  dataset.py 148 строка trainer 408
-
 
 def start_training(log_output):
     """
@@ -18,9 +15,7 @@ def start_training(log_output):
     Возвращает:
     None
     """
-    results = threading.Thread(target=train_yolo_model, args=(log_output,), daemon=True).start()
-    update_launch_settings()
-    print("Обучение завершено. Результаты:", results)
+    threading.Thread(target=train_yolo_model, args=(log_output,), daemon=True).start()
 
 
 def train_yolo_model(log_widget):
@@ -28,7 +23,7 @@ def train_yolo_model(log_widget):
     Обучает модель YOLO на пользовательском наборе данных.
 
     Возвращает:
-    - results: Результаты обучения.
+    - None
     """
     log_redirector = LogRedirector(log_widget)
     sys.stderr = log_redirector  # Захватываем tqdm и ошибки
@@ -75,4 +70,5 @@ def train_yolo_model(log_widget):
         data=data_yaml_path,  # Путь к файлу конфигурации набора данных
     )
 
-    return results
+    update_launch_settings()
+    print("Обучение завершено. Результаты:", results)
