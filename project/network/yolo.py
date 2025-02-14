@@ -1,31 +1,39 @@
+import sys
+import logging
+import threading
 from ultralytics import YOLO
 
 from project.configuration.yolo.data_processing import load_data
 from project.application.backend.cascade_control import update_launch_settings
+from project.application.backend.logger import LogRedirector
 
 # TODO: from ultralytics.utils import LOGGER че ты такое trainer.py 358 строка там брать train.py 113 строка
-#  dataset.py 148 строка
+#  dataset.py 148 строка trainer 408
 
 
-def start_training():
+def start_training(log_output):
     """
     Инициирует обучение и контроль за флагом запуска.
 
     Возвращает:
     None
     """
-    results = train_yolo_model()
+    results = threading.Thread(target=train_yolo_model, args=(log_output,), daemon=True).start()
     update_launch_settings()
     print("Обучение завершено. Результаты:", results)
 
 
-def train_yolo_model():
+def train_yolo_model(log_widget):
     """
     Обучает модель YOLO на пользовательском наборе данных.
 
     Возвращает:
     - results: Результаты обучения.
     """
+    log_redirector = LogRedirector(log_widget)
+    sys.stderr = log_redirector  # Захватываем tqdm и ошибки
+
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO, force=True)  # Перенаправляем logging
 
     # Определение вычислительных модулей
     device = 0 if (load_data("Тип графического устройства")) == 0 else 'cpu'
@@ -51,6 +59,7 @@ def train_yolo_model():
 
     # Загрузка предобученной модели
     model = load_data("Версия YOLO")
+
     model = YOLO(model)
     # Начало обучения на пользовательском наборе данных с сохранением промежуточных результатов
     results = model.train(

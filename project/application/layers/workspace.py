@@ -19,18 +19,22 @@ def create_workspace_layer():
         spacing=50
     )
 
-    info_text = (
-        ""
+    log_output = TextField(
+        multiline=True,
+        read_only=True,
+        max_lines=15,
+        width=900,
+        height=600
     )
 
     text_container = Container(
-        width=1800,
+        width=900,
         height=600,
         padding=20,
         border_radius=10,
         alignment=alignment.center,
         border=border.all(1, color="white"),
-        content=Text(info_text, size=16, color="white"),
+        content=log_output,
     )
     workspace_container.controls.append(text_container)
 
@@ -46,7 +50,7 @@ def create_workspace_layer():
             Container(width=10),
             ElevatedButton(
                 "Обучить модель",
-                on_click=lambda e: start_training(),
+                on_click=lambda e: start_training(log_output),
                 width=150
             )
         ]
