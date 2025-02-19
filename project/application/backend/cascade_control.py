@@ -1,5 +1,8 @@
 import os
 import json
+
+from flet_core import Dropdown, TextField
+
 from project.configuration.yolo.data_processing import default_settings, LABEL_TO_KEY
 
 settings_file = "project/configuration/yolo/data/launch_settings.json"
@@ -80,7 +83,7 @@ def cleanup():
     update_launch_settings()
 
 
-def reset_settings(textfield, dropdown, settings):
+def reset_settings(controls, settings):
     """
     Проверка корректности параметров при штатном выключении программы.
 
@@ -92,10 +95,12 @@ def reset_settings(textfield, dropdown, settings):
     Возвращает:
     None
     """
-    for text in textfield:
-        label = LABEL_TO_KEY.get(text.label)
-        text.value = type(text.value)(default_settings.get(label))
-    for drop in dropdown:
-        label = LABEL_TO_KEY.get(drop.label)
-        drop.value = type(drop.value)(default_settings.get(label))
+    for panel in controls:
+        for control in panel.controls:
+            if type(control) is Dropdown:
+                label = LABEL_TO_KEY.get(control.label)
+                control.value = type(control.value)(default_settings.get(label))
+            if type(control) is TextField:
+                label = LABEL_TO_KEY.get(control.label)
+                control.value = type(control.value)(default_settings.get(label))
     settings.update()
