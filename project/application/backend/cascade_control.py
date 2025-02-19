@@ -104,10 +104,3 @@ def reset_settings(controls, settings):
                 label = LABEL_TO_KEY.get(control.label)
                 control.value = type(control.value)(default_settings.get(label))
     settings.update()
-    """for text in textfield:
-        label = LABEL_TO_KEY.get(text.label)
-        text.value = type(text.value)(default_settings.get(label))
-    for drop in dropdown:
-        label = LABEL_TO_KEY.get(drop.label)
-        drop.value = type(drop.value)(default_settings.get(label))"""
-

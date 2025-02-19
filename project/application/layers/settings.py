@@ -28,7 +28,7 @@ def create_settings_layer():
         ])
     ]
 
-    settings_container = Column(spacing=10)
+    settings_container = Column(spacing=100)
 
     for category, options in categories:
         controls = []
@@ -41,20 +41,22 @@ def create_settings_layer():
                     label=label,
                     options=[dropdown.Option(str(option)) for option in values],
                     value=str(default),
-                    on_change=lambda e: save_data(e.dropdown_setting.value, e.dropdown_setting.label),
+                    on_change=lambda e: save_data(e.control.value, e.control.label),
                     width=250,
                 )
                 controls.append(dropdown_setting)
+
             else:  # TextField
                 pattern = values
                 textfield_setting = TextField(
                     label=label,
                     value=str(default) if default is not None else "",
-                    on_change=lambda e: save_data(e.textfield_setting.value, e.textfield_setting.label)
-                    if re.match(pattern, e.textfield_setting.value) else None,
+                    on_change=lambda e: save_data(e.control.value, e.control.label) if re.match(pattern, e.control.value) else None,
                     width=250,
                 )
                 controls.append(textfield_setting)
+
+            controls.append(Container(height=10))  # Добавляем свободное пространство между настройками
 
         settings_container.controls.append(ExpansionTile(title=Text(category), controls=controls))
 
@@ -70,6 +72,15 @@ def create_settings_layer():
     )
 
     settings_container.controls.append(button_row)
-    settings_tab.content = settings_container
+    scrollable_container = Container(
+        content=Column(
+            controls=[settings_container],
+            spacing=10,
+            scroll=ScrollMode.ALWAYS,
+        ),
+        expand=True,
+    )
+
+    settings_tab.content = scrollable_container
 
     return settings_tab
