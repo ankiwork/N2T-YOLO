@@ -8,6 +8,9 @@ def create_workspace_layer():
     """
     Создает вкладку "workspace".
 
+    Параметры:
+    None
+
     Возвращает:
     workspace_tab: Сформированная вкладка.
     """

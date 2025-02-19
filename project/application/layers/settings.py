@@ -6,6 +6,15 @@ from project.application.backend.cascade_control import reset_settings
 
 
 def create_settings_layer():
+    """
+    Создает вкладку "settings".
+
+    Параметры:
+    None
+
+    Возвращает:
+    settings_tab: Сформированная вкладка.
+    """
     settings_tab = Tab(text="Settings")
 
     categories = [
@@ -28,14 +37,14 @@ def create_settings_layer():
         ])
     ]
 
-    settings_container = Column(spacing=100)
+    settings_container = Column(spacing=10)
 
     for category, options in categories:
-        controls = []
+        controls = [Container(height=10)]
         for label, values in options:
             default = load_data(label)
 
-            if isinstance(values, list):  # Dropdown
+            if isinstance(values, list):
                 default = default if default in values else "параметр не найден"
                 dropdown_setting = Dropdown(
                     label=label,
@@ -46,7 +55,7 @@ def create_settings_layer():
                 )
                 controls.append(dropdown_setting)
 
-            else:  # TextField
+            else:
                 pattern = values
                 textfield_setting = TextField(
                     label=label,
@@ -56,7 +65,7 @@ def create_settings_layer():
                 )
                 controls.append(textfield_setting)
 
-            controls.append(Container(height=10))  # Добавляем свободное пространство между настройками
+            controls.append(Container(height=10))
 
         settings_container.controls.append(ExpansionTile(title=Text(category), controls=controls))
 
@@ -72,6 +81,7 @@ def create_settings_layer():
     )
 
     settings_container.controls.append(button_row)
+
     scrollable_container = Container(
         content=Column(
             controls=[settings_container],
