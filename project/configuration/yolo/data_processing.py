@@ -5,11 +5,11 @@ settings_file = "project/configuration/yolo/data/launch_settings.json"
 data_folder = os.path.dirname(settings_file)
 
 default_settings = {
+    "launch_denial": 0,
     "batch": 1,
     "workers": 4,
     "patience": 5,
     "lr0": 0.0001,
-    "launch_denial": 0,
     "selected_yolo_device": "gpu",
     "selected_yolo_epochs": 100,
     "selected_yolo_resolution": 320,

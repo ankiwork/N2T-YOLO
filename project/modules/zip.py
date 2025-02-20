@@ -81,10 +81,10 @@ def extract_archive(archive_path):
         return
 
     # Создание директории для данных, если она не существует
-    check_and_create_directory("", "datasets")
+    check_and_create_directory("", "dataset")
 
     # Путь к папке datasets
-    extract_path = os.path.join("datasets")
+    extract_path = os.path.join("dataset")
 
     # Удаление содержимого папки datasets, если она не пуста
     if os.listdir(extract_path):
