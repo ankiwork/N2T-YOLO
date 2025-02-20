@@ -76,15 +76,18 @@ def extract_archive(archive_path):
     Возвращает:
     None
     """
+
     # Проверка существования архива
     if not os.path.isfile(archive_path):
         return
 
+    archive = os.path.basename(archive_path)
+    filename = os.path.splitext(archive)[0]
     # Создание директории для данных, если она не существует
-    check_and_create_directory("", "datasets")
+    check_and_create_directory("", filename)
 
     # Путь к папке datasets
-    extract_path = os.path.join("datasets")
+    extract_path = os.path.join(str(filename))
 
     # Удаление содержимого папки datasets, если она не пуста
     if os.listdir(extract_path):
