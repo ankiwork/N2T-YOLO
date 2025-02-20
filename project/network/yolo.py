@@ -1,9 +1,7 @@
-
 import sys
 import logging
 import threading
 from ultralytics import YOLO
-
 
 from project.network.checks import retry
 from project.application.backend.logger import LogRedirector
