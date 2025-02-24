@@ -5,11 +5,12 @@ settings_file = "project/configuration/yolo/data/launch_settings.json"
 data_folder = os.path.dirname(settings_file)
 
 default_settings = {
+    "launch_denial": 0,
+    "dataset_path": "",
     "batch": 1,
     "workers": 4,
     "patience": 5,
     "lr0": 0.0001,
-    "launch_denial": 0,
     "selected_yolo_device": "gpu",
     "selected_yolo_epochs": 100,
     "selected_yolo_resolution": 320,
@@ -17,8 +18,8 @@ default_settings = {
     "selected_save_mode": "True",
     "selected_save_period": -1,
     "cache_on": "False",
-    "name_of_project": "None",
-    "name_of_records_directory": "None",
+    "name_of_project": "runs",
+    "name_of_records_directory": "train",
     "rewrite_ok": "False",
     "selected_pretrained_mode": "True",
     "selected_seed": 0,
@@ -31,6 +32,7 @@ default_settings = {
 LABEL_TO_KEY = {
     "Разовое количество фотографий": "batch",
     "Количество потоков-работников": "workers",
+    "Путь до датасета": "dataset_path",
     "Ожидающие эпохи": "patience",
     "Скорость обновления весов": "lr0",
     "Тип графического устройства": "selected_yolo_device",

@@ -1,9 +1,11 @@
 import os
+import json
 import shutil
 import zipfile
 from flet import *
 
 from project.modules.directory import check_and_create_directory
+from project.configuration.yolo.data_processing import default_settings, settings_file
 
 
 def check_and_create_file(directory, file_name):
@@ -76,17 +78,29 @@ def extract_archive(archive_path):
     Возвращает:
     None
     """
+
     # Проверка существования архива
     if not os.path.isfile(archive_path):
         return
 
+    archive = os.path.basename(archive_path)
+    filename = os.path.splitext(archive)[0]
     # Создание директории для данных, если она не существует
-    check_and_create_directory("", "datasets")
+    check_and_create_directory("", filename)
 
-    # Путь к папке datasets
-    extract_path = os.path.join("datasets")
+    # Путь к папке с датасетом
+    extract_path = os.path.join(str(filename))
 
-    # Удаление содержимого папки datasets, если она не пуста
+    try:
+        with open(settings_file, "r", encoding="utf-8") as f:
+            settings = json.load(f)
+            settings["dataset_path"] = extract_path + "\\data.yaml"
+        with open(settings_file, "w", encoding="utf-8") as f:
+            json.dump(settings, f, indent=4, ensure_ascii=False)
+    except (json.JSONDecodeError, FileNotFoundError) as e:
+        print(f"Ошибка при обработке JSON: {e}")
+
+    # Удаление содержимого папки, если она не пуста
     if os.listdir(extract_path):
         shutil.rmtree(extract_path)
         os.makedirs(extract_path)
