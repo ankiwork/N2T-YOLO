@@ -5,7 +5,7 @@ import zipfile
 from flet import *
 
 from project.modules.directory import check_and_create_directory
-from project.configuration.yolo.data_processing import default_settings, settings_file
+from project.configuration.yolo.data_processing import settings_file
 
 
 def check_and_create_file(directory, file_name):
