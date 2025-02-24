@@ -21,6 +21,7 @@ def check_file_settings():
         with open(settings_file, "w", encoding="utf-8") as f:
             json.dump(default_settings, f, indent=4)
 
+
 def reset_settings(controls, settings):
     """
     Проверка корректности параметров при штатном выключении программы.
@@ -43,7 +44,6 @@ def reset_settings(controls, settings):
                 control.value = type(control.value)(default_settings.get(label))
 
     with open(settings_file, "w", encoding="utf-8") as f:
-        default_settings["launch_denial"] = 1
         json.dump(default_settings, f, indent=4)
 
     settings.update()
