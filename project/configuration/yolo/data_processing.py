@@ -6,6 +6,7 @@ data_folder = os.path.dirname(settings_file)
 
 default_settings = {
     "launch_denial": 0,
+    "dataset_path": "",
     "batch": 1,
     "workers": 4,
     "patience": 5,
@@ -31,6 +32,7 @@ default_settings = {
 LABEL_TO_KEY = {
     "Разовое количество фотографий": "batch",
     "Количество потоков-работников": "workers",
+    "Путь до датасета": "dataset_path",
     "Ожидающие эпохи": "patience",
     "Скорость обновления весов": "lr0",
     "Тип графического устройства": "selected_yolo_device",

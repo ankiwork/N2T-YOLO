@@ -39,7 +39,7 @@ def params_designation(log_widget=""):
         "device": 0 if load_data("Тип графического устройства") == 0 else 'cpu',
         "epochs": int(load_data("Количество эпох")),
         "image": int(load_data("Размер изображения")),
-        "data_yaml_path": "datasets/data.yaml",
+        "data_yaml_path": str(load_data("Путь до датасета")),
         "name": load_data("Имя тренировочного прогона"),
         "project": load_data("Имя директории проекта"),
         "batch": int(load_data("Разовое количество фотографий")),

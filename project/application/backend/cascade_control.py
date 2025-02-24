@@ -3,9 +3,8 @@ import json
 
 from flet_core import Dropdown, TextField
 
-from project.configuration.yolo.data_processing import default_settings, LABEL_TO_KEY
+from project.configuration.yolo.data_processing import default_settings, LABEL_TO_KEY, settings_file
 
-settings_file = "project/configuration/yolo/data/launch_settings.json"
 data_folder = os.path.dirname(settings_file)
 
 
