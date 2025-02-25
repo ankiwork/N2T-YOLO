@@ -8,14 +8,17 @@ from project.application.backend.logger import LogRedirector
 from project.configuration.yolo.data_processing import load_data
 
 
-def start_training(log_output):
+def start_training(log_widget):
     """
     Инициирует обучение.
+
+    Параметры:
+     - log_widget (TextField): поле для логирования
 
     Возвращает:
     None
     """
-    threading.Thread(target=train_yolo_model, args=(log_output,), daemon=True).start()
+    threading.Thread(target=train_yolo_model, args=(log_widget,), daemon=True).start()
 
 
 def params_designation(log_widget=""):

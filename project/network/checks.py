@@ -23,9 +23,17 @@ def get_datasets_path():
     return datasets_path
 
 
-def retry(num_retries, exception_to_check, sleep_time=0):
+def retry(num_retries, exception_to_check, sleep_time=1):
     """
-    Декоратор, повторяющий выполнение функции обучения, если было вызвано исключение RuntimeError
+    Декоратор, Для замены пути к датасетам в системе, если было вызвано исключение RuntimeError
+
+    Параметры:
+    - num_retries (int): Количество повторных попыток
+    - exception_to_check (Exception): Ошибка, которая активирует декоратор
+    - sleep_time (int): Время ожидания перед повторной попыткой
+
+    Возвращает:
+    -
     """
     def decorate(func):
         @wraps(func)
@@ -44,7 +52,7 @@ def retry(num_retries, exception_to_check, sleep_time=0):
                     print(f"{func.__name__} raised {e.__class__.__name__}. Retrying...")
                     if i < num_retries:
                         time.sleep(sleep_time)
-            # Raise the exception if the function was not successful after the specified number of retries
+            # Вызывает исключение если функцию не удалось выполнить после заданного количества попыток
             raise exception_to_check
         return wrapper
     return decorate
