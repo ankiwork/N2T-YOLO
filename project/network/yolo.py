@@ -6,7 +6,6 @@ from ultralytics import YOLO
 from project.network.checks import retry
 from project.application.backend.logger import LogRedirector
 from project.configuration.yolo.data_processing import load_data
-from project.application.backend.cascade_control import update_launch_settings
 
 
 def start_training(log_output):
@@ -74,5 +73,4 @@ def train_yolo_model(log_widget):
         epochs=params["epochs"],
         data=params["data_yaml_path"],
     )
-    update_launch_settings()
     print("Обучение завершено. Результаты:", results)

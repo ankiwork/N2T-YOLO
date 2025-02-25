@@ -1,6 +1,5 @@
 import os
 import json
-
 from flet_core import Dropdown, TextField
 
 from project.configuration.yolo.data_processing import default_settings, LABEL_TO_KEY, settings_file
@@ -21,44 +20,6 @@ def check_file_settings():
     if not os.path.exists(settings_file):
         with open(settings_file, "w", encoding="utf-8") as f:
             json.dump(default_settings, f, indent=4)
-
-    with open(settings_file, "r", encoding="utf-8") as f:
-        settings = json.load(f)
-
-    return settings.get("launch_denial")
-
-
-def update_launch_settings():
-    """
-    Обновляет флаг запуска.
-
-    Параметры:
-    None
-
-    Возвращает:
-    None
-    """
-    with open(settings_file, "r", encoding="utf-8") as f:
-        settings = json.load(f)
-        if settings["launch_denial"] == 1:
-            settings["launch_denial"] = 0
-        else:
-            settings["launch_denial"] = 1
-        with open(settings_file, "w") as file:
-            json.dump(settings, file, indent=4)
-
-
-def cleanup():
-    """
-    Проверка корректности параметров при штатном выключении программы.
-
-    Параметры:
-    None
-
-    Возвращает:
-    None
-    """
-    update_launch_settings()
 
 
 def reset_settings(controls, settings):
@@ -83,7 +44,6 @@ def reset_settings(controls, settings):
                 control.value = type(control.value)(default_settings.get(label))
 
     with open(settings_file, "w", encoding="utf-8") as f:
-        default_settings["launch_denial"] = 1
         json.dump(default_settings, f, indent=4)
 
     settings.update()
