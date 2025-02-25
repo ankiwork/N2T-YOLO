@@ -1,4 +1,5 @@
 **/.idea/worspace.xml
 **/project/configuration/yolo/data/launch_settings.json
 **/datasets
+**/runs
 *.pt

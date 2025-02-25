@@ -31,7 +31,6 @@ def params_designation(log_widget=""):
     if log_widget != "":
         log_redirector = LogRedirector(log_widget)
         sys.stderr = log_redirector  # Захватываем tqdm и ошибки
-
         logging.basicConfig(stream=sys.stderr, level=logging.INFO, force=True)  # Перенаправляем logging
 
     params = {
