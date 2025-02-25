@@ -29,8 +29,11 @@ class LogRedirector(io.TextIOBase):
 
             with self.lock:
                 self.text_widget.value = ""  # Очищаем перед выводом
-                self.text_widget.value = filtered_message + "\n"
+                self.text_widget.value += filtered_message + "\n"
                 self.text_widget.update()
+        else:
+            self.text_widget.value += message + "\n"
+            self.text_widget.update()
 
     def flush(self):
-        pass  # Ничего не делаем, но метод нужен
+        pass
