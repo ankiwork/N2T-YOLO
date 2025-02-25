@@ -5,6 +5,49 @@ import threading
 progress_chars = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"]
 
 
+def grouping(log, match):
+    """
+        Группирует части строки для удобства.
+
+        Параметры:
+        log (LogRedirector) : Объект класса
+        match (Match): Отфильтрованная строка
+
+        Возвращает:
+            progress_data (dict) : Словарь с группами строки
+            progressing (str): Строка полоски прогресса
+        """
+    progress_data = {
+        "epoch": match.group("epoch"),
+        "percent": match.group("percent"),
+        "cur_iter": int(match.group("cur_iter")),
+        "tot_iter": int(match.group("tot_iter")),
+        "progress": match.group("progress")
+    }
+
+    return progress_data, progressing(log, progress_data.get("cur_iter"), progress_data.get("tot_iter"))
+
+
+def progressing(self, current_iter, total_iter):
+    """
+        Обновляет прогресс.
+
+        Параметры:
+        self (LogRedirector) : Объект класса
+        current_iter (int): Текущий процент выполненных
+        total_iter (int): Всего сколько нужно выполнить
+
+        Возвращает:
+            (str): Строка полоски прогресса
+    """
+    progress = current_iter / total_iter if total_iter > 0 else 0
+    full_blocks = int(progress * self.bar_length)
+    remainder = (progress * self.bar_length - full_blocks) * len(progress_chars)
+    partial_block = progress_chars[int(remainder)]
+
+    return "█" * full_blocks + partial_block + "...." * (self.bar_length - full_blocks - 1)
+
+
 class LogRedirector(io.TextIOBase):
     """
     Класс для перенаправления вывода в Flet UI на вкладку workspace.
@@ -22,23 +65,12 @@ class LogRedirector(io.TextIOBase):
         self.bar_length = 10
 
     def write(self, message):
-        match = re.search(r"(\d+/\d+).*?:\s*(\d+%)\|.*?\|\s*(\d+)/(\d+) (\[.*?])", message)
+        match = re.search(r"(?P<epoch>\d+/\d+).*?:\s*(?P<percent>\d+%)\|.*?\|\s*(?P<cur_iter>\d+)/(?P<tot_iter>\d+) ("
+                          r"?P<progress>\[.*?])", message)
         if match:
-            epoch_info = match.group(1)  # Например, "1/100"
-            percent_complete = match.group(2)  # Прогресс "3%"
-            current_iter = int(match.group(3))  # Текущее значение итерации
-            total_iter = int(match.group(4))  # Общее количество итераций
-            tqdm_progress = match.group(5)  # Часть [00:12<05:44, 1.69s/it]
+            parts, progress_bar = grouping(self, match)
 
-            progress = current_iter / total_iter if total_iter > 0 else 0
-            full_blocks = int(progress * self.bar_length)  # Полностью заполненные блоки
-            remainder = (progress * self.bar_length - full_blocks) * len(progress_chars)  # Остаток для частичного блока
-            partial_block = progress_chars[int(remainder)]  # Выбираем соответствующий символ
-
-            # Генерация строки прогресса
-            progress_bar = "█" * full_blocks + partial_block + "...." * (self.bar_length - full_blocks - 1)
-
-            formatted_message = f"{epoch_info} - {percent_complete}|{progress_bar}| {tqdm_progress}"
+            formatted_message = f"{parts.get('epoch')} - {parts.get('percent')}|{progress_bar}| {parts.get('progress')}"
 
             with self.lock:
                 self.text_widget.value = ""  # Очищаем перед выводом
