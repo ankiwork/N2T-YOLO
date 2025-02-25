@@ -2,6 +2,8 @@ import io
 import re
 import threading
 
+progress_chars = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"]
+
 
 class LogRedirector(io.TextIOBase):
     """
@@ -29,16 +31,18 @@ class LogRedirector(io.TextIOBase):
             tqdm_progress = match.group(5)  # Часть [00:12<05:44, 1.69s/it]
 
             progress = current_iter / total_iter if total_iter > 0 else 0
+            full_blocks = int(progress * self.bar_length)  # Полностью заполненные блоки
+            remainder = (progress * self.bar_length - full_blocks) * len(progress_chars)  # Остаток для частичного блока
+            partial_block = progress_chars[int(remainder)]  # Выбираем соответствующий символ
 
-            filled_blocks = int(progress * self.bar_length)  # Количество заполненных блоков
-            empty_blocks = self.bar_length - filled_blocks  # Оставшиеся блоки
-            progress_bar = "█" * filled_blocks + "." * empty_blocks  # Генерация строки прогресса
+            # Генерация строки прогресса
+            progress_bar = "█" * full_blocks + partial_block + "...." * (self.bar_length - full_blocks - 1)
 
             formatted_message = f"{epoch_info} - {percent_complete}|{progress_bar}| {tqdm_progress}"
 
             with self.lock:
                 self.text_widget.value = ""  # Очищаем перед выводом
-                self.text_widget.value += "Epoch           Progress       Remaining time" + "\n"
+                self.text_widget.value += "Epoch                     Progress               Remaining time" + "\n"
                 self.text_widget.value += formatted_message + "\n"
                 self.text_widget.update()
 
