@@ -73,10 +73,13 @@ class LogRedirector(io.TextIOBase):
             formatted_message = f"{parts.get('epoch')} - {parts.get('percent')}|{progress_bar}| {parts.get('progress')}"
 
             with self.lock:
-                self.text_widget.value = ""
+                #self.text_widget.value = ""
                 self.text_widget.value += "Epoch                     Progress               Remaining time" + "\n"
                 self.text_widget.value += formatted_message + "\n"
                 self.text_widget.update()
+        else:
+            self.text_widget.value += message
+            self.text_widget.update()
 
     def flush(self):
         pass
