@@ -1,8 +1,8 @@
 import re
 from flet import *
 
-from project.configuration.yolo.data_processing import save_data, load_data
 from project.application.backend.cascade_control import reset_settings
+from project.configuration.yolo.data_processing import save_data, load_data
 
 
 def create_settings_layer():

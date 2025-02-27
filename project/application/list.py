@@ -1,6 +1,6 @@
 from project.application.layers.license import create_license_layer
-from project.application.layers.workspace import create_workspace_layer
 from project.application.layers.settings import create_settings_layer
+from project.application.layers.workspace import create_workspace_layer
 
 
 def create_layers_list():
