@@ -1,12 +1,9 @@
-import sys
-import logging
-import threading
-import json
 import os
+import json
+import threading
 
-from ultralytics.utils import LOGGER
-from project.application.backend.logger import LogRedirector
 from project.configuration.yolo.data_processing import load_data
+from project.application.backend.logger import logger_initialisation
 
 
 def get_datasets_path():
@@ -52,7 +49,7 @@ def start_training(log_widget):
     threading.Thread(target=train_yolo_model, args=(log_widget,), daemon=True).start()
 
 
-def params_designation(log_widget=""):
+def params_designation():
     """
     Получает параметры для обучения YOLO из JSON-файла.
 
@@ -62,26 +59,6 @@ def params_designation(log_widget=""):
     Возвращает:
     - params (dict): Словарь с параметрами для обучения
     """
-
-    # Set up the logger
-    if log_widget != "":
-        logger = logging.getLogger('ultralytics')
-        logger.setLevel(logging.INFO)
-
-        # Создаем кастомный обработчик для перенаправления логов в виджет
-        log_redirector = LogRedirector(log_widget)
-        log_handler = logging.StreamHandler(log_redirector)
-        log_handler.setLevel(logging.INFO)
-        logger.addHandler(log_handler)
-
-        # Дублируем stderr в лог
-        sys.stderr = log_redirector
-
-        # Удаляем стандартные обработчики, чтобы избежать дублирования
-        if logger.hasHandlers():
-            logger.handlers.clear()
-
-        logger.addHandler(log_handler)  # Добавляем наш кастомный обработчик # Перенаправляем logging
 
     params = {
         "device": 0 if load_data("Тип графического устройства") == 0 else 'cpu',
@@ -107,7 +84,9 @@ def train_yolo_model(log_widget):
     Возвращает:
     - None
     """
-    params = params_designation(log_widget)
+    params = params_designation()
+    logger_initialisation(log_widget)
+
     results = params["model"].train(
         batch=params["batch"],
         workers=params["workers"],
