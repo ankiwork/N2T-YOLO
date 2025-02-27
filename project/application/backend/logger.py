@@ -1,8 +1,41 @@
 import io
 import re
+import sys
+import logging
 import threading
 
 progress_chars = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"]
+
+
+def logger_initialisation(log_widget=""):
+    """
+    Инициирует логирование.
+
+    Параметры:
+     - log_widget (TextField): поле для логирования
+
+    Возвращает:
+    None
+    """
+    # Set up the logger
+    if log_widget != "":
+        logger = logging.getLogger('ultralytics')
+        logger.setLevel(logging.INFO)
+
+        # Создаем кастомный обработчик для перенаправления логов в виджет
+        log_redirector = LogRedirector(log_widget)
+        log_handler = logging.StreamHandler(log_redirector)
+        log_handler.setLevel(logging.INFO)
+        logger.addHandler(log_handler)
+
+        # Дублируем stderr в лог
+        sys.stderr = log_redirector
+
+        # Удаляем стандартные обработчики, чтобы избежать дублирования
+        if logger.hasHandlers():
+            logger.handlers.clear()
+
+        logger.addHandler(log_handler)  # Добавляем наш кастомный обработчик # Перенаправляем logging
 
 
 def grouping(log, match):
@@ -73,10 +106,13 @@ class LogRedirector(io.TextIOBase):
             formatted_message = f"{parts.get('epoch')} - {parts.get('percent')}|{progress_bar}| {parts.get('progress')}"
 
             with self.lock:
-                self.text_widget.value = ""
+                # self.text_widget.value = ""
                 self.text_widget.value += "Epoch                     Progress               Remaining time" + "\n"
                 self.text_widget.value += formatted_message + "\n"
                 self.text_widget.update()
+        else:
+            self.text_widget.value += message
+            self.text_widget.update()
 
     def flush(self):
         pass
