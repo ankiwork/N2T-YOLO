@@ -108,3 +108,4 @@ def extract_archive(archive_path):
     # Распаковка архива
     with zipfile.ZipFile(archive_path, 'r') as zip_ref:
         zip_ref.extractall(extract_path)
+        print("finished")

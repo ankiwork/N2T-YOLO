@@ -2,7 +2,7 @@ import os
 import json
 import threading
 
-from project.configuration.yolo.data_processing import load_data
+from project.configuration.yolo.data_processing import load_data, settings_file
 from project.application.backend.logger import logger_initialisation
 
 
@@ -18,22 +18,21 @@ def get_datasets_path():
 
     # Поднимаемся на три уровня вверх, чтобы попасть в корень проекта
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(current_file)))
-
+    with open(settings_file, "r", encoding="utf-8") as f:
+        settings = json.load(f)
+        path = settings["dataset_path"]
+        path = (path.rsplit('\\data.yaml', 1)[0])
     # Формируем путь к папке datasets
-    datasets_path = os.path.join(project_root, "datasets")
+    datasets_path = os.path.join(project_root, path)
 
-    return datasets_path
+    path_to_ultralytics = (os.environ['APPDATA'] + "\\Ultralytics\\settings.json")
 
-
-path_to_ultralytics = (os.environ['APPDATA'] + "\\Ultralytics\\settings.json")
-with open(path_to_ultralytics, "r", encoding="utf-8") as f:
-    dataset_path = json.load(f)
-    if dataset_path["datasets_dir"] != get_datasets_path():
-        with open(path_to_ultralytics, "w", encoding="utf-8") as file:
-            dataset_path["datasets_dir"] = get_datasets_path()
-            json.dump(dataset_path, file, indent=0)
-
-    from ultralytics import YOLO
+    with open(path_to_ultralytics, "r", encoding="utf-8") as f:
+        dataset_path = json.load(f)
+        if dataset_path["datasets_dir"] != datasets_path:
+            with open(path_to_ultralytics, "w", encoding="utf-8") as file:
+                dataset_path["datasets_dir"] = datasets_path
+                json.dump(dataset_path, file, indent=0)
 
 
 def start_training(log_widget):
@@ -59,7 +58,7 @@ def params_designation():
     Возвращает:
     - params (dict): Словарь с параметрами для обучения
     """
-
+    from ultralytics import YOLO
     params = {
         "device": 0 if load_data("Тип графического устройства") == "gpu" else 'cpu',
         "epochs": int(load_data("Количество эпох")),
@@ -84,6 +83,9 @@ def train_yolo_model(log_widget):
     Возвращает:
     - None
     """
+
+    get_datasets_path()
+
     params = params_designation()
     logger_initialisation(log_widget)
 
