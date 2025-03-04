@@ -61,7 +61,7 @@ def params_designation():
     """
 
     params = {
-        "device": 0 if load_data("Тип графического устройства") == 0 else 'cpu',
+        "device": 0 if load_data("Тип графического устройства") == "gpu" else 'cpu',
         "epochs": int(load_data("Количество эпох")),
         "image": int(load_data("Размер изображения")),
         "data_yaml_path": str(load_data("Путь до датасета")),
