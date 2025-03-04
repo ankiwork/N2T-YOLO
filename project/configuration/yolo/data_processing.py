@@ -5,6 +5,7 @@ settings_file = "project/configuration/yolo/data/launch_settings.json"
 data_folder = os.path.dirname(settings_file)
 
 default_settings = {
+    "launch_denial": 0,
     "dataset_path": "",
     "batch": 1,
     "workers": 4,
